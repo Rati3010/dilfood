@@ -1,9 +1,10 @@
 import "./App.css";
+import AnalyticDashboard from "./page/AnalyticDashboard";
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <AnalyticDashboard/>
     </>
   );
 }
