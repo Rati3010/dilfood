@@ -20,7 +20,7 @@ const SidebarC = () => {
             <Sidebar.Item href="#" icon={HiChartPie}>
               Dashboard
             </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiViewBoards}>
+            <Sidebar.Item href="#" icon={HiViewBoards} className='active'>
               Analytics
             </Sidebar.Item>
             <Sidebar.Item href="#" icon={HiInbox}>

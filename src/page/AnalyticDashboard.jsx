@@ -9,12 +9,14 @@ const AnalyticDashboard = () => {
   return (
     <>
      <NavbarC/>
-     <SidebarC/>
-     <div className='grid justify-between grid-cols-2'>
-       <BarChart/>
+    <div className='flex'>
+    <SidebarC/>
+     <div className='grid justify-between grid-cols-2 ml-40 pl-20 '>
+       <BarChart />
        <LineChart/>
        <PieChart/>
      </div>
+    </div>
     </>
   )
 }

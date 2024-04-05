@@ -1,21 +1,44 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 import { mockData } from '../data/mockData';
 
 const PieChart = () => {
   const [sortBy, setSortBy] = useState('revenue');
   const [topBrandsData, setTopBrandsData] = useState([]);
-  const chartRef = useRef(null);
 
   useEffect(() => {
     generateTopBrandsData();
   }, [sortBy]);
 
   useEffect(() => {
-    if (chartRef.current) {
-      chartRef.current.destroy();
+    const canvas = document.getElementById('pieChart');
+    const ctx = canvas.getContext('2d');
+    let chartInstance = null;
+
+    if (chartInstance) {
+      chartInstance.destroy();
     }
-    createPieChart();
+
+    chartInstance = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: topBrandsData.map(brand => brand.label),
+        datasets: [{
+          data: topBrandsData.map(brand => brand.value),
+          backgroundColor: topBrandsData.map(brand => brand.backgroundColor)
+        }]
+      },
+      options: {
+        responsive: true,
+        aspectRatio: 1
+      }
+    });
+
+    return () => {
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+    };
   }, [topBrandsData]);
 
   const generateTopBrandsData = () => {
@@ -55,34 +78,18 @@ const PieChart = () => {
     return color;
   };
 
-  const createPieChart = () => {
-    const ctx = document.getElementById('pieChart').getContext('2d');
-    chartRef.current = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: topBrandsData.map(brand => brand.label),
-        datasets: [{
-          data: topBrandsData.map(brand => brand.value),
-          backgroundColor: topBrandsData.map(brand => brand.backgroundColor)
-        }]
-      },
-      options: {
-        responsive: true
-      }
-    });
-  };
-
   const handleSortByChange = (event) => {
     setSortBy(event.target.value);
   };
 
   return (
     <div>
+      <h3 className='mb-5'>Top 4 brands as per {sortBy === 'revenue' ? 'Revenue' : 'Tie Up' }</h3>
       <select value={sortBy} onChange={handleSortByChange}>
         <option value="revenue">Revenue</option>
         <option value="tieUpCount">Tie-Up Count</option>
       </select>
-      <canvas id="pieChart" width="400" height="400"></canvas>
+      <canvas id="pieChart" width="200" height="200"></canvas>
     </div>
   );
 };

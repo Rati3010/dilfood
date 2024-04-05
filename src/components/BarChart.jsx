@@ -66,7 +66,7 @@ const BarChart = () => {
   };
 
   return (
-    <div>
+    <div  className='mt-20 mb-20 mr-20'>
       <select value={selectedBrand} onChange={handleBrandChange}>
         <option value="">Select Brand</option>
         {mockData.brandData.map(brand => (
